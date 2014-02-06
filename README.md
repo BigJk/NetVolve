@@ -21,6 +21,6 @@ The RAR includes all files you will need to run one of the interfaces.
 
 Now you just need to compile a interface and the library and put them in the same folder as the downloaded files.
 
-## Getting started
+## Quick start
 
 If you don't want to compile anything here you can get a precompiled version: <a href="https://dl.dropboxusercontent.com/u/21883526/precompiled.rar">Download</a>
