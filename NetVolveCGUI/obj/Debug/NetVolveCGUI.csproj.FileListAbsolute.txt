@@ -1,7 +1,0 @@
-C:\Users\BigJk\Documents\Visual Studio 2012\Projects\NetVolve\NetVolveCGUI\bin\Debug\NetVolveCGUI.exe
-C:\Users\BigJk\Documents\Visual Studio 2012\Projects\NetVolve\NetVolveCGUI\bin\Debug\NetVolveCGUI.pdb
-C:\Users\BigJk\Documents\Visual Studio 2012\Projects\NetVolve\NetVolveCGUI\obj\Debug\NetVolveCGUI.csprojResolveAssemblyReference.cache
-C:\Users\BigJk\Documents\Visual Studio 2012\Projects\NetVolve\NetVolveCGUI\obj\Debug\NetVolveCGUI.exe
-C:\Users\BigJk\Documents\Visual Studio 2012\Projects\NetVolve\NetVolveCGUI\obj\Debug\NetVolveCGUI.pdb
-C:\Users\BigJk\Documents\Visual Studio 2012\Projects\NetVolve\NetVolveCGUI\bin\Debug\NetVolveLib.dll
-C:\Users\BigJk\Documents\Visual Studio 2012\Projects\NetVolve\NetVolveCGUI\bin\Debug\NetVolveLib.pdb
