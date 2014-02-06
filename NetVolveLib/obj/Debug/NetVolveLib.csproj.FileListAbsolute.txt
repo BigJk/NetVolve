@@ -1,0 +1,5 @@
+c:\users\bigjk\documents\visual studio 2012\Projects\NetVolve\NetVolveLib\bin\Debug\NetVolveLib.dll
+c:\users\bigjk\documents\visual studio 2012\Projects\NetVolve\NetVolveLib\bin\Debug\NetVolveLib.pdb
+c:\users\bigjk\documents\visual studio 2012\Projects\NetVolve\NetVolveLib\obj\Debug\NetVolveLib.dll
+c:\users\bigjk\documents\visual studio 2012\Projects\NetVolve\NetVolveLib\obj\Debug\NetVolveLib.pdb
+C:\Users\BigJk\Documents\Visual Studio 2012\Projects\NetVolve\NetVolveLib\obj\Debug\NetVolveLib.csprojResolveAssemblyReference.cache

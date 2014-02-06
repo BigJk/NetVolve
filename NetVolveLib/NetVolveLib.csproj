@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EF79F7F8-219A-4E90-BA4A-1D16B3BB9FF6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NetVolveLib</RootNamespace>
+    <AssemblyName>NetVolveLib</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Extensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Evolver\Plugins\AddLine.cs" />
+    <Compile Include="Evolver\Plugins\ChangeInstructors.cs" />
+    <Compile Include="Evolver\Plugins\ChangeAddressingModes.cs" />
+    <Compile Include="Evolver\Plugins\ChangeEnd.cs" />
+    <Compile Include="Evolver\Plugins\ChangeModifiers.cs" />
+    <Compile Include="Evolver\Plugins\ChangeNumbers.cs" />
+    <Compile Include="Evolver\Plugins\Crossover.cs" />
+    <Compile Include="Evolver\Evolver.cs" />
+    <Compile Include="Evolver\PluginManager.cs" />
+    <Compile Include="Evolver\IEvolverPlugin.cs" />
+    <Compile Include="Evolver\Plugins\RemoveLine.cs" />
+    <Compile Include="Grid\Fight.cs" />
+    <Compile Include="Grid\GridSerializer.cs" />
+    <Compile Include="Mars\Result.cs" />
+    <Compile Include="Mars\Simulator.cs" />
+    <Compile Include="Name\RawNameBase.cs" />
+    <Compile Include="Name\NameBase.cs" />
+    <Compile Include="Parameters\EvolverParameter.cs" />
+    <Compile Include="Evolver\Generator.cs" />
+    <Compile Include="Grid\Cell.cs" />
+    <Compile Include="Grid\Grid.cs" />
+    <Compile Include="Parameters\GridParameter.cs" />
+    <Compile Include="Grid\GridWarrior.cs" />
+    <Compile Include="Parameters\MarsParameter.cs" />
+    <Compile Include="Parameters\Parameter.cs" />
+    <Compile Include="Redcode\Enums\AddressingModes.cs" />
+    <Compile Include="Redcode\Enums\AddressingModesHelper.cs" />
+    <Compile Include="Redcode\Parser.cs" />
+    <Compile Include="Redcode\Lines\WarriorEndLine.cs" />
+    <Compile Include="Redcode\Enums\Modifiers.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Redcode\Enums\Instructors.cs" />
+    <Compile Include="Redcode\Warrior.cs" />
+    <Compile Include="Redcode\Lines\WarriorLine.cs" />
+    <Compile Include="Statics.cs" />
+    <Compile Include="Utility\ColorHelper.cs" />
+    <Compile Include="Redcode\Enums\EnumHelper.cs" />
+    <Compile Include="Utility\GenericCopier.cs" />
+    <Compile Include="Name\NameGenerator.cs" />
+    <Compile Include="Parameters\ParameterLoader.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

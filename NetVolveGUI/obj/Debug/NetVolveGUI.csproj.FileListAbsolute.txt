@@ -1,0 +1,10 @@
+c:\users\bigjk\documents\visual studio 2012\Projects\NetVolve\NetVolveGUI\bin\Debug\NetVolveGUI.exe
+c:\users\bigjk\documents\visual studio 2012\Projects\NetVolve\NetVolveGUI\bin\Debug\NetVolveGUI.pdb
+c:\users\bigjk\documents\visual studio 2012\Projects\NetVolve\NetVolveGUI\bin\Debug\NetVolveLib.dll
+c:\users\bigjk\documents\visual studio 2012\Projects\NetVolve\NetVolveGUI\bin\Debug\NetVolveLib.pdb
+c:\users\bigjk\documents\visual studio 2012\Projects\NetVolve\NetVolveGUI\obj\Debug\NetVolveGUI.csprojResolveAssemblyReference.cache
+c:\users\bigjk\documents\visual studio 2012\Projects\NetVolve\NetVolveGUI\obj\Debug\NetVolveGUI.Properties.Resources.resources
+c:\users\bigjk\documents\visual studio 2012\Projects\NetVolve\NetVolveGUI\obj\Debug\NetVolveGUI.csproj.GenerateResource.Cache
+c:\users\bigjk\documents\visual studio 2012\Projects\NetVolve\NetVolveGUI\obj\Debug\NetVolveGUI.exe
+c:\users\bigjk\documents\visual studio 2012\Projects\NetVolve\NetVolveGUI\obj\Debug\NetVolveGUI.pdb
+c:\users\bigjk\documents\visual studio 2012\Projects\NetVolve\NetVolveGUI\obj\Debug\NetVolveGUI.mainFrm.resources
