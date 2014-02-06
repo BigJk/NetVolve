@@ -1,7 +1,0 @@
-C:\Users\BigJk\Documents\Visual Studio 2012\Projects\NetVolve\NetVolveLinux\bin\Debug\NetVolveLinux.exe
-C:\Users\BigJk\Documents\Visual Studio 2012\Projects\NetVolve\NetVolveLinux\bin\Debug\NetVolveLinux.pdb
-C:\Users\BigJk\Documents\Visual Studio 2012\Projects\NetVolve\NetVolveLinux\bin\Debug\NetVolveLib.dll
-C:\Users\BigJk\Documents\Visual Studio 2012\Projects\NetVolve\NetVolveLinux\bin\Debug\NetVolveLib.pdb
-C:\Users\BigJk\Documents\Visual Studio 2012\Projects\NetVolve\NetVolveLinux\obj\Debug\NetVolveLinux.csprojResolveAssemblyReference.cache
-C:\Users\BigJk\Documents\Visual Studio 2012\Projects\NetVolve\NetVolveLinux\obj\Debug\NetVolveLinux.exe
-C:\Users\BigJk\Documents\Visual Studio 2012\Projects\NetVolve\NetVolveLinux\obj\Debug\NetVolveLinux.pdb
