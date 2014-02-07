@@ -33,6 +33,15 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.pnGrid = new NetVolveGUI.DoubleBufferedPanel();
+            this.lstRank = new NetVolveGUI.DoubleBufferedListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnExRed = new System.Windows.Forms.Button();
@@ -59,15 +68,7 @@
             this.loadFromToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblTotalWarriors = new System.Windows.Forms.ToolStripLabel();
-            this.pnGrid = new NetVolveGUI.DoubleBufferedPanel();
-            this.lstRank = new NetVolveGUI.DoubleBufferedListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lblFps = new System.Windows.Forms.ToolStripLabel();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -106,6 +107,74 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(504, 112);
             this.panel3.TabIndex = 2;
+            // 
+            // pnGrid
+            // 
+            this.pnGrid.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnGrid.Location = new System.Drawing.Point(3, 3);
+            this.pnGrid.Name = "pnGrid";
+            this.pnGrid.Size = new System.Drawing.Size(500, 500);
+            this.pnGrid.TabIndex = 0;
+            this.pnGrid.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // lstRank
+            // 
+            this.lstRank.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader6,
+            this.columnHeader2,
+            this.columnHeader13,
+            this.columnHeader3,
+            this.columnHeader4,
+            this.columnHeader5});
+            this.lstRank.FullRowSelect = true;
+            this.lstRank.GridLines = true;
+            this.lstRank.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lstRank.Location = new System.Drawing.Point(504, 3);
+            this.lstRank.Name = "lstRank";
+            this.lstRank.Size = new System.Drawing.Size(504, 389);
+            this.lstRank.TabIndex = 1;
+            this.lstRank.UseCompatibleStateImageBehavior = false;
+            this.lstRank.View = System.Windows.Forms.View.Details;
+            this.lstRank.DoubleClick += new System.EventHandler(this.lstRank_DoubleClick);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "";
+            this.columnHeader1.Width = 25;
+            // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "#";
+            this.columnHeader6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader6.Width = 30;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Name";
+            this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader2.Width = 140;
+            // 
+            // columnHeader13
+            // 
+            this.columnHeader13.Text = "Author";
+            this.columnHeader13.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader13.Width = 120;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Win";
+            this.columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Lose";
+            this.columnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // columnHeader5
+            // 
+            this.columnHeader5.Text = "Fields";
+            this.columnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // tabPage2
             // 
@@ -282,7 +351,8 @@
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripDropDownButton1,
-            this.lblTotalWarriors});
+            this.lblTotalWarriors,
+            this.lblFps});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
@@ -339,73 +409,11 @@
             this.lblTotalWarriors.Size = new System.Drawing.Size(64, 22);
             this.lblTotalWarriors.Text = "Warriors:";
             // 
-            // pnGrid
+            // lblFps
             // 
-            this.pnGrid.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnGrid.Location = new System.Drawing.Point(3, 3);
-            this.pnGrid.Name = "pnGrid";
-            this.pnGrid.Size = new System.Drawing.Size(500, 500);
-            this.pnGrid.TabIndex = 0;
-            this.pnGrid.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
-            // 
-            // lstRank
-            // 
-            this.lstRank.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader6,
-            this.columnHeader2,
-            this.columnHeader13,
-            this.columnHeader3,
-            this.columnHeader4,
-            this.columnHeader5});
-            this.lstRank.FullRowSelect = true;
-            this.lstRank.GridLines = true;
-            this.lstRank.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.lstRank.Location = new System.Drawing.Point(504, 3);
-            this.lstRank.Name = "lstRank";
-            this.lstRank.Size = new System.Drawing.Size(504, 389);
-            this.lstRank.TabIndex = 1;
-            this.lstRank.UseCompatibleStateImageBehavior = false;
-            this.lstRank.View = System.Windows.Forms.View.Details;
-            this.lstRank.DoubleClick += new System.EventHandler(this.lstRank_DoubleClick);
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "";
-            this.columnHeader1.Width = 25;
-            // 
-            // columnHeader6
-            // 
-            this.columnHeader6.Text = "#";
-            this.columnHeader6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader6.Width = 30;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Name";
-            this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader2.Width = 140;
-            // 
-            // columnHeader13
-            // 
-            this.columnHeader13.Text = "Author";
-            this.columnHeader13.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader13.Width = 120;
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "Win";
-            this.columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // columnHeader4
-            // 
-            this.columnHeader4.Text = "Lose";
-            this.columnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // columnHeader5
-            // 
-            this.columnHeader5.Text = "Fields";
-            this.columnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.lblFps.Name = "lblFps";
+            this.lblFps.Size = new System.Drawing.Size(29, 22);
+            this.lblFps.Text = "FPS:";
             // 
             // mainFrm
             // 
@@ -475,6 +483,6 @@
         private System.Windows.Forms.ToolStripLabel lblTotalWarriors;
         private System.Windows.Forms.ColumnHeader columnHeader13;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.ToolStripLabel lblFps;
     }
 }
-

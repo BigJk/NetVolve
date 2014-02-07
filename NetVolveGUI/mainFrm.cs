@@ -103,6 +103,7 @@ namespace NetVolveGUI
         private void UpdatePanel()
         {
             lblTotalWarriors.Text = "Warriors: " + grid.Warriors.Count;
+            lblFps.Text = "FPS: " + grid.Fps;
             pnGrid.Refresh();
         }
 
@@ -226,6 +227,11 @@ namespace NetVolveGUI
                 }
             }
             grid.StartAsync(Threads);
+        }
+
+        private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
         }
     }
 }

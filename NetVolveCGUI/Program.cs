@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
+using NetVolveLib;
 using NetVolveLib.Grid;
 using NetVolveLib.Parameters;
 
@@ -278,6 +279,7 @@ namespace NetVolveCGUI
             DrawFrame(51, 28, 47, 5);
             BufferedConsole.Write("|Info|", 53, 28);
             BufferedConsole.Write("Warrior Count: " + Grid.Warriors.Count, 53, 30);
+            BufferedConsole.Write("FightsPS: " + Grid.Fps, 75, 30);
             TimeSpan elapsed = DateTime.Now - Started;
             BufferedConsole.Write("Elapsed Time:  " + elapsed.Hours + ":" + elapsed.Minutes + ":" + elapsed.Seconds, 53, 31);
         }

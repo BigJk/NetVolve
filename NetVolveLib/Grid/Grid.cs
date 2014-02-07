@@ -26,13 +26,21 @@ namespace NetVolveLib.Grid
         public int Size { get { return Parameters.GridParameters.Size; } }
         public Parameter Parameters { get; set; }
 
+        public DateTime StartingTime { get; set; }
+        public int FightsDone { get; set; }
+        public int Fps
+        {
+            get { return (int)Math.Round(FightsDone/(DateTime.Now - StartingTime).TotalSeconds); }
+        }
+
         private readonly Simulator _usedSimulator;
         private Task[] _tasks;
         private readonly Evolver.Evolver _evolver;
         private bool _run;
 
         public Grid(Parameter parameters)
-        {     
+        {
+            StartingTime = DateTime.Now;
             Parameters = parameters;
 
             Cells = new Cell[Parameters.GridParameters.Size, Parameters.GridParameters.Size];
@@ -48,6 +56,7 @@ namespace NetVolveLib.Grid
 
         public Grid(Parameter parameters, Cell[,] cells, List<GridWarrior> warriors)
         {
+            StartingTime = DateTime.Now;
             Parameters = parameters;
 
             Cells = cells;
@@ -109,6 +118,7 @@ namespace NetVolveLib.Grid
 
         public void StartAsync(int threads)
         {
+            StartingTime = DateTime.Now;
             _run = true;
             Action a = () =>
             {
@@ -166,6 +176,7 @@ namespace NetVolveLib.Grid
 
         private void FightCallback(Cell won, Cell lose)
         {
+            FightsDone++;
             lock (_warriorLocker)
             {
                 GridWarrior loser = lose.Owner;
