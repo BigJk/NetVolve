@@ -29,7 +29,7 @@ namespace NetVolveLib.Mars
 
         internal static Result Parse(string s)
         {
-            if (s.Contains("load"))
+            if (s.Contains("load")) // Checks for "could not load warrior" error.
                 return new Result(0, 0, 0);
             string[][] parts = s.Split('\n').Select(t => t.Split(' ')).ToArray();
             return new Result(int.Parse(parts[0][0]), int.Parse(parts[1][0]), int.Parse(parts[1][1]));
