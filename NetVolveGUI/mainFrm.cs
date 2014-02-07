@@ -31,7 +31,7 @@ namespace NetVolveGUI
         }
 
         private static Parameter Paras = ParameterLoader.FromFile("settings.cfg");
-        private static int Threads = 4;
+        private static int Threads = 7;
 
         private Grid grid;
         private GridWarrior[] Warriors;

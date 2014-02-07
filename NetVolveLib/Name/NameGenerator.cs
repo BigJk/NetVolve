@@ -14,10 +14,9 @@ namespace NetVolveLib.Name
         {
             AvailableBases = new List<NameBase>();
             JavaScriptSerializer scriptSerializer = new JavaScriptSerializer();
-            foreach (string s in Directory.GetFiles("data","*.lang"))
-            {
-                AvailableBases.Add(new NameBase(scriptSerializer.Deserialize<RawNameBase>(File.ReadAllText(s))));
-            }
+            AvailableBases.Add(new NameBase(scriptSerializer.Deserialize<RawNameBase>(Properties.Resources.set1)));
+            AvailableBases.Add(new NameBase(scriptSerializer.Deserialize<RawNameBase>(Properties.Resources.set2)));
+            AvailableBases.Add(new NameBase(scriptSerializer.Deserialize<RawNameBase>(Properties.Resources.set2)));
         }
 
         public static string GetName()

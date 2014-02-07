@@ -61,6 +61,11 @@
     <Compile Include="Grid\GridWarrior.cs" />
     <Compile Include="Parameters\MarsParameter.cs" />
     <Compile Include="Parameters\Parameter.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Redcode\Enums\AddressingModes.cs" />
     <Compile Include="Redcode\Enums\AddressingModesHelper.cs" />
     <Compile Include="Redcode\Parser.cs" />
@@ -78,6 +83,17 @@
     <Compile Include="Parameters\ParameterLoader.cs" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\set1.txt" />
+    <Content Include="Resources\set2.txt" />
+    <Content Include="Resources\set3.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
