@@ -21,18 +21,16 @@ namespace NetVolveLib.Mars
 
         public Result(int attackerWon, int defenderWon, int draw)
         {
+            if (attackerWon == -1 && defenderWon == -1 && draw == -1) // <- Error
+            {
+                attackerWon = 0;
+                defenderWon = 0;
+                draw = 0;
+            }
             AttackerWon = attackerWon;
             AttackerDraw = draw;
             DefenderDraw = draw;
             DefenderWon = defenderWon;
-        }
-
-        internal static Result Parse(string s)
-        {
-            if (s.Contains("load")) // Checks for "could not load warrior" error.
-                return new Result(0, 0, 0);
-            string[][] parts = s.Split('\n').Select(t => t.Split(' ')).ToArray();
-            return new Result(int.Parse(parts[0][0]), int.Parse(parts[1][0]), int.Parse(parts[1][1]));
         }
 
     }

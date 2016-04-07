@@ -29,6 +29,11 @@ namespace NetVolveLib.Redcode.Lines
             return new WarriorEndLine(binReader.ReadInt16());
         }
 
+        public WarriorEndLine DeepCopy()
+        {
+            return new WarriorEndLine(Number);
+        }
+
         #region Equal
 
         public bool Equals(WarriorEndLine other)

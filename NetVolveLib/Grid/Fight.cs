@@ -29,6 +29,13 @@ namespace NetVolveLib.Grid
 
         private readonly Action<Cell, Cell> _fightCallback;
 
+        /// <summary>
+        /// Creates a 'Fight' object
+        /// </summary>
+        /// <param name="attackerPosition">Attacking cell</param>
+        /// <param name="defenderPosition">Defending cell</param>
+        /// <param name="simulator">The simulator</param>
+        /// <param name="fightFinished">The fight finished callback</param>
         public Fight(Cell attackerPosition, Cell defenderPosition, Simulator simulator, Action<Cell, Cell> fightFinished)
         {
             AttackerPosition = attackerPosition;
@@ -37,13 +44,17 @@ namespace NetVolveLib.Grid
             _fightCallback = fightFinished;
         }
 
+        /// <summary>
+        /// Simulates the fight
+        /// </summary>
         public void Simulate()
         {
             bool finished = false;
             while (!finished)
             {
-                bool aLock = Monitor.TryEnter(AttackerPosition.CellLock, 100);
-                bool dLock = Monitor.TryEnter(DefenderPosition.CellLock, 100);
+
+                bool aLock = Monitor.TryEnter(AttackerPosition.CellLock, 1);
+                bool dLock = Monitor.TryEnter(DefenderPosition.CellLock, 1);
 
                 if (aLock && dLock)
                 {
@@ -69,9 +80,14 @@ namespace NetVolveLib.Grid
                     Monitor.Exit(AttackerPosition.CellLock);
                 if (dLock)
                     Monitor.Exit(DefenderPosition.CellLock);
+
             }
         }
 
+        /// <summary>
+        /// Return's the fight winner
+        /// </summary>
+        /// <returns>The 'GridWarrior' object that won</returns>
         public GridWarrior GetWinner()
         {
             return Result.AttackerWon > Result.DefenderWon ? Attacker : Defender;

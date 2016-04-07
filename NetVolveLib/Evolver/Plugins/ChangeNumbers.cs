@@ -14,7 +14,7 @@ namespace NetVolveLib.Evolver.Plugins
 
         public string Author
         {
-            get { return "BigJK"; }
+            get { return "BigJk"; }
         }
 
         public string Description

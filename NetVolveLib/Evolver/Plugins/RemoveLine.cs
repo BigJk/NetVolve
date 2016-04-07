@@ -6,7 +6,7 @@ using NetVolveLib.Redcode.Lines;
 
 namespace NetVolveLib.Evolver.Plugins
 {
-    public class RemoveLine : IEvolverPlugin
+    public class RemoveLine : IEvolverPluginExtended
     {
 
         public string Name
@@ -16,7 +16,7 @@ namespace NetVolveLib.Evolver.Plugins
 
         public string Author
         {
-            get { return "BigJK"; }
+            get { return "BigJk"; }
         }
 
         public string Description
@@ -25,6 +25,11 @@ namespace NetVolveLib.Evolver.Plugins
         }
 
         public double Chance { get; set; }
+
+        public bool Possible(Warrior father, Parameter parameter)
+        {
+            return father.CodeLines.Count() >= 2;
+        }
 
         public Warrior Execute(Warrior father, Warrior mother, Parameter parameter)
         {

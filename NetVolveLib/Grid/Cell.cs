@@ -27,6 +27,10 @@ namespace NetVolveLib.Grid
             Y = y;
         }
 
+        /// <summary>
+        /// Changes the owner of the cell
+        /// </summary>
+        /// <param name="newOwner">New owner</param>
         public void ChangeOwner(GridWarrior newOwner)
         {
             Owner.OwnedCells.Remove(this);

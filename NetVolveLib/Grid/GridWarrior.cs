@@ -43,6 +43,15 @@ namespace NetVolveLib.Grid
             startCell.Owner = this;
         }
 
+        /// <summary>
+        /// Creates a deep copy of the 'GridWarrior'
+        /// </summary>
+        /// <returns></returns>
+        public GridWarrior Clone()
+        {
+            return new GridWarrior(Warrior.DeepCopy(), Color);
+        }
+
         public int CompareTo(GridWarrior other)
         {
             return other.OwnedCells.Count.CompareTo(OwnedCells.Count);

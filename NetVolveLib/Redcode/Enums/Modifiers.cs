@@ -2,12 +2,12 @@
 {
     public enum Modifiers : byte
     {
-        i,
-        f,
-        x,
-        a,
-        b,
-        ab,
-        ba
+        A,
+        B,
+        AB,
+        BA,
+        F,
+        X,
+        I
     }
 }

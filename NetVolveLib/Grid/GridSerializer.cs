@@ -8,6 +8,11 @@ namespace NetVolveLib.Grid
     public static class GridSerializer
     {
 
+        /// <summary>
+        /// Saves the grid to file
+        /// </summary>
+        /// <param name="path">Path to file</param>
+        /// <param name="grid">Instance of grid</param>
         public static void Save(string path, Grid grid)
         {
             using (FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate,FileAccess.Write, FileShare.None))
@@ -18,6 +23,11 @@ namespace NetVolveLib.Grid
             }
         }
 
+        /// <summary>
+        /// Loads the grid from file
+        /// </summary>
+        /// <param name="path">Path to file</param>
+        /// <returns></returns>
         public static Grid Load(string path)
         {
             Parameter paras;

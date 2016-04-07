@@ -5,9 +5,9 @@
         sharp, // #
         dollar, // $
         at, // @
-        star, // *
         lowerThen, // <
         higherThen, // >
+        star, // *
         open, // {
         close // }
     }

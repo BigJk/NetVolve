@@ -5,9 +5,9 @@ namespace NetVolveLib.Utility
     public static class ColorHelper
     {
 
-        public static Color IncreaseColor(Color baseColor, int amount)
+        public static Color IncreaseColor(Color baseColor, int r, int g, int b)
         {
-            return Color.FromArgb(Change(baseColor.R, amount), Change(baseColor.G, amount), Change(baseColor.B, amount));
+            return Color.FromArgb(Change(baseColor.R, r), Change(baseColor.G, g), Change(baseColor.B, b));
         }
 
         private static int Change(int number, int amount)

@@ -2,24 +2,24 @@
 {
     public enum Instructors : byte
     {
-        spl,
-        mov,
-        dat,
-        jmp,
-        jmn,
-        jmz,
-        djn,
-        sne,
-        seq,
-        add,
-        sub,
-        mul,
-        div,
-        mod,
-        slt,
-        ldp,
-        stp,
-        nop,
-        cmp
+        MOV,
+        ADD,
+        SUB,
+        MUL,
+        DIV,
+        MOD,
+        JMZ,
+        JMN,
+        DJN,
+        CMP,
+        SLT,
+        SPL,
+        DAT,
+        JMP,
+        SEQ,
+        SNE,
+        NOP,
+        LDP,
+        STP
     }
 }

@@ -56,7 +56,10 @@ namespace NetVolveLib.Redcode.Lines
                 + Number2;
         }
 
-
+        public WarriorLine DeepCopy()
+        {
+            return new WarriorLine(Instructor, Modifier, AddressingMode1, AddressingMode2, Number1, Number2);
+        }
 
         #region Equal
 

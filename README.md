@@ -4,14 +4,9 @@
 
 ## About NetVolve
 
-NetVolve is a Library and Interace for evolving corewar warriors. It uses a grid-based system and uses evolution to get new and better warriors.
+NetVolve is a Library and Graphical User Interface for evolving Core War warriors. It uses a grid-based system combined with genetic algorithms to create and optimize new warriors through mutations and crossovers.
 
 ## Content
 
-* NetVolveLib: The main library.
-* NetVolveCGUI: The console interface.
-* NetVolveGUI: The windows forms interface.
-
-## Quick start
-
-If you don't want to compile anything here you can get a precompiled version: <a href="https://dl.dropboxusercontent.com/u/21883526/precompiled.rar">Download</a>
+* NetVolveLib: The Library.
+* NetVolveGUI: The Graphical User Interface.

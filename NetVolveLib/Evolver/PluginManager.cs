@@ -25,6 +25,7 @@ namespace NetVolveLib.Evolver
 
         public PluginManager(Parameter parameter)
         {
+            // Basic hardcoded plugins
             Plugins = new List<IEvolverPlugin>
             {
                 new AddLine(),
@@ -45,6 +46,9 @@ namespace NetVolveLib.Evolver
             }
         }
 
+        /// <summary>
+        /// Loads all plugins from the plugin directory
+        /// </summary>
         public void LoadPlugins()
         {
             if (!Directory.Exists("plugins")) Directory.CreateDirectory("plugins");

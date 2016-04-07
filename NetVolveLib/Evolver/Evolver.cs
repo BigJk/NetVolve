@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using NetVolveLib.Name;
 using NetVolveLib.Parameters;
 using NetVolveLib.Redcode;
-using NetVolveLib.Utility;
 
 namespace NetVolveLib.Evolver
 {
@@ -19,22 +17,37 @@ namespace NetVolveLib.Evolver
             PluginManager = new PluginManager(parameters);
         }
 
+        /// <summary>
+        /// Let's the warrior evolve with the posibility to use buddy as a partner
+        /// </summary>
+        /// <param name="warrior">Main warrior</param>
+        /// <param name="buddy">Possible mutation partner</param>
+        /// <returns></returns>
         public Warrior EvolveWarrior(Warrior warrior, Warrior buddy)
         {
-            Warrior cWarrior = GenericCopier<Warrior>.DeepCopy(warrior);
-            Warrior cBuddy = GenericCopier<Warrior>.DeepCopy(buddy);
+            Warrior cWarrior = warrior.DeepCopy();
+            Warrior cBuddy = buddy.DeepCopy();
 
             int changes = 0;
-            while(changes < 5)
+            while(changes < Statics.MainRandom.Next(1,6))
             {
-                IEvolverPlugin selectedPlugin = PluginManager[Statics.MainRandom.Next(PluginManager.Plugins.Count)];
+                IEvolverPlugin selectedPlugin;
+                while (true)
+                {
+                    selectedPlugin = PluginManager[Statics.MainRandom.Next(PluginManager.Plugins.Count)];
+                    if (!(selectedPlugin is IEvolverPluginExtended)) { break; }
+                    IEvolverPluginExtended extendedPlugin = (IEvolverPluginExtended) selectedPlugin;
+                    if (extendedPlugin.Possible(warrior, Parameters)) { break; }
+                }
+
                 if (!(Statics.MainRandom.NextDouble() > selectedPlugin.Chance)) continue;
                 cWarrior = selectedPlugin.Execute(cWarrior, cBuddy, Parameters);
                 changes++;
             }
 
-            cWarrior.Name = NameGenerator.GetName();
+            cWarrior.Generation++;
             cWarrior.Author = "NetVolve";
+            cWarrior.SetWarriorName();
             return cWarrior;
         }
 

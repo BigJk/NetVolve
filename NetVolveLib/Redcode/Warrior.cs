@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace NetVolveLib.Redcode
 {
@@ -15,6 +16,8 @@ namespace NetVolveLib.Redcode
         public string Name { get; set; }
         public string Author { get; set; }
 
+        public int Generation { get; set; }
+
         public WarriorLine[] CodeLines { get; set; }
         public WarriorEndLine EndLine { get; set; }
 
@@ -23,12 +26,43 @@ namespace NetVolveLib.Redcode
             get { return EndLine != null; }
         }
 
-        public Warrior(string type, string name, string author, WarriorLine[] codeLines)
+        public byte[] Genom
         {
-            Type = type;
-            Name = name;
-            Author = author;
-            CodeLines = codeLines;
+            get
+            {
+                List<byte> genom = new List<byte>();
+
+                foreach(WarriorLine w in CodeLines)
+                {
+                    genom.AddRange(new byte[] {
+                        (byte)w.AddressingMode1,
+                        (byte)w.AddressingMode2,
+                        (byte)w.Instructor,
+                        (byte)w.Modifier });
+
+                    genom.AddRange(BitConverter.GetBytes(w.Number1));
+                    genom.AddRange(BitConverter.GetBytes(w.Number2));
+                }
+
+                if (HasEndLine)
+                {
+                    genom.AddRange(BitConverter.GetBytes(EndLine.Number));
+                }
+
+                return genom.ToArray();
+            }
+        }
+        
+        public Warrior(string type, string name, string author, int generation, WarriorLine[] codeLines)
+            : this(type, name, author, generation, codeLines, null) { }
+
+        public Warrior(string type, string name, string author, WarriorLine[] codeLines)
+            : this(type, name, author, codeLines, null) { }
+
+        public Warrior(string type, string name, string author, int generation, WarriorLine[] codeLines, WarriorEndLine endLine)
+            : this(type, name, author, codeLines, endLine)
+        {
+            Generation = generation;
         }
 
         public Warrior(string type, string name, string author, WarriorLine[] codeLines, WarriorEndLine endLine)
@@ -40,6 +74,10 @@ namespace NetVolveLib.Redcode
             EndLine = endLine;
         }
 
+        /// <summary>
+        /// Saves warrior to file
+        /// </summary>
+        /// <param name="path">Path to file</param>
         public void Save(string path)
         {
             using (FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
@@ -49,6 +87,7 @@ namespace NetVolveLib.Redcode
                     binWriter.Write(Type);
                     binWriter.Write(Name);
                     binWriter.Write(Author);
+                    binWriter.Write(Generation);
                     binWriter.Write(HasEndLine);
                     binWriter.Write((short)CodeLines.Count());
                     foreach (WarriorLine line in CodeLines)
@@ -60,9 +99,15 @@ namespace NetVolveLib.Redcode
             }
         }
 
+        /// <summary>
+        /// Loads warrior from file
+        /// </summary>
+        /// <param name="path">Path to file</param>
+        /// <returns></returns>
         public static Warrior Load(string path)
         {
             string type, name, author;
+            int generation;
             bool hasEndLine;
 
             List<WarriorLine> warriorLines = new List<WarriorLine>();
@@ -75,6 +120,7 @@ namespace NetVolveLib.Redcode
                     type = binReader.ReadString();
                     name = binReader.ReadString();
                     author = binReader.ReadString();
+                    generation = binReader.ReadInt32();
                     hasEndLine = binReader.ReadBoolean();
 
                     short codeLines = binReader.ReadInt16();
@@ -89,10 +135,14 @@ namespace NetVolveLib.Redcode
             }
 
             return hasEndLine
-                ? new Warrior(type, name, author, warriorLines.ToArray(), warriorEndLine)
-                : new Warrior(type, name, author, warriorLines.ToArray());
+                ? new Warrior(type, name, author, generation, warriorLines.ToArray(), warriorEndLine)
+                : new Warrior(type, name, author, generation, warriorLines.ToArray());
         }
 
+        /// <summary>
+        /// Returns redcode of warrior without other informations like name or author
+        /// </summary>
+        /// <returns></returns>
         public string ToShortString()
         {
             string output = CodeLines.Aggregate("", (current, line) => current + (line + "\n"));
@@ -101,20 +151,40 @@ namespace NetVolveLib.Redcode
             return output;
         }
 
+        /// <summary>
+        /// Returns redcode of warrior
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return ";redcode-" + Type + "\n;name " + Name + "\n;author " + Author + "\n" + ToShortString();
         }
 
-        public Warrior Clone()
+        /// <summary>
+        /// Calculates name by generation and crc32 of the genom
+        /// </summary>
+        public void SetWarriorName()
         {
-            WarriorLine[] lines = GenericCopier<WarriorLine[]>.DeepCopy(CodeLines);
-            WarriorEndLine endLine = null;
-            if (HasEndLine)
-                endLine = GenericCopier<WarriorEndLine>.DeepCopy(EndLine);
+            Name = Generation + "-" + Crc32.Compute(Genom).ToString("x2").ToUpper();
+        }
+
+        /// <summary>
+        /// Creates a deep copy of the warrior
+        /// </summary>
+        /// <returns></returns>
+        public Warrior DeepCopy()
+        {
+            char[] type = new char[Type.Length];
+            char[] name = new char[Name.Length];
+            char[] author = new char[Author.Length];
+
+            Type.CopyTo(0, type, 0, Type.Length);
+            Name.CopyTo(0, name, 0, Name.Length);
+            Author.CopyTo(0, author, 0, Author.Length);
+
             return HasEndLine
-                ? new Warrior((string) Type.Clone(), (string) Name.Clone(), (string) Author.Clone(), lines, endLine)
-                : new Warrior((string) Type.Clone(), (string) Name.Clone(), (string) Author.Clone(), lines);
+                ? new Warrior(type.ToString(), name.ToString(), author.ToString(), Generation, CodeLines.Select(warriorLine => warriorLine.DeepCopy()).ToArray(), EndLine.DeepCopy())
+                : new Warrior(type.ToString(), name.ToString(), author.ToString(), Generation, CodeLines.Select(warriorLine => warriorLine.DeepCopy()).ToArray());
         }
 
         #region Equal

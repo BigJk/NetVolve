@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -20,6 +21,7 @@ using NetVolveLib.Redcode.Enums;
 using NetVolveLib.Redcode.Lines;
 using NetVolveLib.Utility;
 
+
 namespace NetVolveGUI
 {
     public partial class mainFrm : Form
@@ -28,87 +30,51 @@ namespace NetVolveGUI
         {
             InitializeComponent();
             DoubleBuffered = true;
+            for (int i = 0; i < 20; i++)
+            {
+                lstRank.Items.Add(
+                    new ListViewItem(new string[] {"", (i + 1).ToString(), " - ", " - ", " - ", " - ", " - ", " - "})
+                    {
+                        UseItemStyleForSubItems = false
+                    });
+            }
         }
 
         private static Parameter Paras = ParameterLoader.FromFile("settings.cfg");
-        private static int Threads = 7;
+        private static int Threads = 6;
 
-        private Grid grid;
+        public Grid grid;
         private GridWarrior[] Warriors;
         private GridWarrior SelectedWarrior;
 
         private delegate void UpdateDel();
+
         private void Form1_Load(object sender, EventArgs e)
         {
-            if (File.Exists("save.bin"))
-                grid = GridSerializer.Load("save.bin");
-            else
-                grid  = new Grid(Paras);
-            for (int i = 0; i < 20; i++)
-            {
-                lstRank.Items.Add(new ListViewItem(new string[] { "", (i + 1).ToString(), " - ", " - ", " - ", " - ", " - " })
-                {
-                    UseItemStyleForSubItems = false
-                });
-            }
-            pnGrid.Refresh();
+
+            grid = File.Exists("save.bin") ? GridSerializer.Load("save.bin") : new Grid(Paras);
+
             Task.Factory.StartNew(new Action(() =>
             {
                 while (true)
                 {
                     try
                     {
-                        Thread.Sleep(100);
-                        Invoke(new UpdateDel(UpdatePanel));
-                    }
-                    catch { }
-                }
-            }));
-            Task.Factory.StartNew(new Action(() =>
-            {
-                while (true)
-                {
-                    try
-                    {
-                        Thread.Sleep(2000);
+                        Thread.Sleep(500);
                         Invoke(new UpdateDel(UpdateList));
                     }
                     catch { }
                 }
             }));
+
             grid.StartAsync(Threads);
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-            int rec = pnGrid.Width / grid.Size;
-            Bitmap bmp = new Bitmap(pnGrid.Width, pnGrid.Height);
-            using (Graphics g = Graphics.FromImage(bmp))
-            {
-
-                for (int y = 0; y < grid.Size; y++)
-                {
-                    for (int x = 0; x < grid.Size; x++)
-                    {
-                        using (SolidBrush b = new SolidBrush(grid.Cells[y, x].Owner.Color))
-                        {
-                            g.FillRectangle(b, new Rectangle(x * rec, y * rec, rec, rec));
-                        }
-                    }
-                }
-                e.Graphics.DrawImage(bmp, 0, 0);
-            }
-
-        }
-        private void UpdatePanel()
-        {
-            lblTotalWarriors.Text = "Warriors: " + grid.Warriors.Count;
-            lblFps.Text = "FPS: " + grid.Fps;
-            pnGrid.Refresh();
         }
 
         private void UpdateList()
         {
+            lblTotalWarriors.Text = "Warriors: " + grid.Warriors.Count;
+            lblFps.Text = "FPS: " + grid.Fps;
+
             lstRank.BeginUpdate();
             GridWarrior[] warriors = grid.GetWarriors(20);
             for (int i = 0; i < 20; i++)
@@ -121,6 +87,7 @@ namespace NetVolveGUI
                     lstRank.Items[i].SubItems[4].Text = warriors[i].Wins.ToString();
                     lstRank.Items[i].SubItems[5].Text = warriors[i].Lose.ToString();
                     lstRank.Items[i].SubItems[6].Text = warriors[i].OwnedCells.Count.ToString();
+                    lstRank.Items[i].SubItems[7].Text = warriors[i].Warrior.Generation.ToString();
                 }
                 else
                 {
@@ -130,6 +97,7 @@ namespace NetVolveGUI
                     lstRank.Items[i].SubItems[4].Text = " - ";
                     lstRank.Items[i].SubItems[5].Text = " - ";
                     lstRank.Items[i].SubItems[6].Text = " - ";
+                    lstRank.Items[i].SubItems[7].Text = " - ";
                 }
             }
             Warriors = warriors;
@@ -178,6 +146,7 @@ namespace NetVolveGUI
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            if (!Directory.Exists("backup")) Directory.CreateDirectory("backup");
             GridSerializer.Save("backup\\" + DateTime.Now.ToShortTimeString().Replace(":","_") + "save.bin", grid);
         }
 
@@ -227,11 +196,6 @@ namespace NetVolveGUI
                 }
             }
             grid.StartAsync(Threads);
-        }
-
-        private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
         }
     }
 }

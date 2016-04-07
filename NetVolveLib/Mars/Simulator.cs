@@ -1,76 +1,53 @@
 ﻿using System;
-using System.Diagnostics;
-using System.IO;
+using System.Runtime.InteropServices;
 using NetVolveLib.Redcode;
 
 namespace NetVolveLib.Mars
 {
+
     [Serializable]
     public class Simulator
     {
 
-        public Parameters.Parameter Parameters { get; set; }
+        [DllImport(@"exmars.dll", EntryPoint = "Fight2Warriors@40", SetLastError = true, CallingConvention = CallingConvention.StdCall)]
+        public static extern void Fight2Warriors(
+            string w1, 
+            string w2, 
+            int coresize, 
+            int cycles,
+            int maxprocess,
+            int rounds,
+            int maxwarriorlen,
+            ref int win1,
+            ref int win2,
+            ref int equal );
 
-        public string ParameterString
-        {
-            get
-            {
-                return "-r " + Parameters.MarsParameters.Rounds + " -c " + Parameters.MarsParameters.Cycles + " -s " + Parameters.MarsParameters.Coresize + " -p " +
-                       Parameters.MarsParameters.MaxProcess + " -l " + Parameters.MarsParameters.MaxWarriorLen + " -d " + Parameters.MarsParameters.MaxWarriorLen;
-            }
-        }
+        public Parameters.Parameter Parameters { get; set; }
 
         public Simulator(Parameters.Parameter parameters)
         {
             Parameters = parameters;
         }
 
+        /// <summary>
+        /// Simulates a fight between two warrior's
+        /// </summary>
+        /// <param name="attacker">The attacking warrior</param>
+        /// <param name="defender">The defending warrior</param>
+        /// <returns></returns>
         public Result SimulateFight(Warrior attacker, Warrior defender)
         {
-            string attackerPath, defenderPath;
-            lock (Statics.CounterLocker)
-            {
-                attackerPath = Parameters.MarsParameters.Cache + "/" + ++Statics.Counter + ".c";
-                defenderPath = Parameters.MarsParameters.Cache + "/" + ++Statics.Counter + ".c";
-                if (Statics.Counter > 100000) Statics.Counter = 0;
-            }
-
-            File.WriteAllText(attackerPath, attacker.ToShortString());
-            File.WriteAllText(defenderPath, defender.ToShortString());
-
-            Result output = SimulateFight(attackerPath, defenderPath);
-
-            File.Delete(attackerPath);
-            File.Delete(defenderPath);
-
-            return output;
-        }
-
-        public Result SimulateFight(string attackerPath, string defenderPath)
-        {
-            Process marsProcess = new Process
-            {
-                StartInfo =
-                    new ProcessStartInfo(Parameters.MarsParameters.Exmars, ParameterString + " \"" + attackerPath + "\" \"" + defenderPath + "\"")
-                    {
-                        RedirectStandardOutput = true,
-                        RedirectStandardError = true,
-                        UseShellExecute = false,
-                        CreateNoWindow = true,
-                        WindowStyle = ProcessWindowStyle.Hidden
-                    }
-            };
-
-            marsProcess.Start();
-
-            string output = "";
-            using (StreamReader streamReader = marsProcess.StandardOutput)
-            {
-                while (!streamReader.EndOfStream)
-                    output += streamReader.ReadLine() + "\n";
-            }
-
-            return Result.Parse(output);
+            int win1 = 0, win2 = 0, draw = 0;
+            Fight2Warriors(
+                attacker.ToShortString(),
+                defender.ToShortString(),
+                Parameters.MarsParameters.Coresize,
+                Parameters.MarsParameters.Cycles,
+                Parameters.MarsParameters.MaxProcess,
+                Parameters.MarsParameters.Rounds,
+                Parameters.MarsParameters.MaxWarriorLen,
+                ref win1, ref win2, ref draw);
+            return new Result(win1, win2, draw);
         }
 
     }
