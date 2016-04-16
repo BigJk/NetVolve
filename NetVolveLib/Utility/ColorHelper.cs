@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Diagnostics;
+using System.Drawing;
 
 namespace NetVolveLib.Utility
 {
@@ -15,6 +16,14 @@ namespace NetVolveLib.Utility
             if (number + amount > 255 || number + amount < 0)
                 amount = -amount;
             return number + amount;
+        }
+
+        public static Color Mix(Color aColor, Color bColor)
+        {
+            float r = (aColor.R + bColor.R) / (2.0f);
+            float g = (aColor.G + bColor.G) / (2.0f);
+            float b = (aColor.B + bColor.B) / (2.0f);
+            return Color.FromArgb((byte)r, (byte)g, (byte)b);
         }
 
     }

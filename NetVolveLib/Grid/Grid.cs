@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -132,11 +133,20 @@ namespace NetVolveLib.Grid
                     Thread.Sleep(1);
                 }
             };
-            _tasks = new Task[threads];     
+            _tasks = new Task[threads + 1];     
             for (int i = 0; i < threads; i++)
             {
                 _tasks[i] = Task.Factory.StartNew(a);
             }
+            _tasks[threads] = Task.Factory.StartNew(() =>
+            {
+                while (_run)
+                {
+                    StartingTime = DateTime.Now;
+                    FightsDone = 0;
+                    Thread.Sleep(5000);
+                }
+            });
         }
 
         /// <summary>
@@ -281,10 +291,12 @@ namespace NetVolveLib.Grid
                 GridWarrior loser = lose.Owner;
                 if (Statics.MainRandom.NextDouble() < Parameters.EvolverParameters.EvolutionChance)
                 {
+                    bool crossover = false;
+                    Warrior evolveWarrior = _evolver.EvolveWarrior(won.Owner.Warrior, lose.Owner.Warrior, ref crossover);
                     GridWarrior newWarrior = new GridWarrior(
-                        _evolver.EvolveWarrior(won.Owner.Warrior, lose.Owner.Warrior),
-                        ColorHelper.IncreaseColor(won.Owner.Color, Statics.MainRandom.Next(-25, 25),
-                            Statics.MainRandom.Next(-25, 25), Statics.MainRandom.Next(-25, 25)));
+                        evolveWarrior,
+                        !crossover ? ColorHelper.IncreaseColor(won.Owner.Color, Statics.MainRandom.Next(-25, 25), Statics.MainRandom.Next(-25, 25), Statics.MainRandom.Next(-25, 25)) : ColorHelper.Mix(won.Owner.Color, lose.Owner.Color));
+                            
 
                     Warriors.Add(newWarrior);
                     lose.ChangeOwner(newWarrior);

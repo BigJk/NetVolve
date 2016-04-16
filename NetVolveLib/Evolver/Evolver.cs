@@ -22,8 +22,9 @@ namespace NetVolveLib.Evolver
         /// </summary>
         /// <param name="warrior">Main warrior</param>
         /// <param name="buddy">Possible mutation partner</param>
+        /// <param name="crossover">True if crossover happend</param>
         /// <returns></returns>
-        public Warrior EvolveWarrior(Warrior warrior, Warrior buddy)
+        public Warrior EvolveWarrior(Warrior warrior, Warrior buddy, ref bool crossover)
         {
             Warrior cWarrior = warrior.DeepCopy();
             Warrior cBuddy = buddy.DeepCopy();
@@ -41,6 +42,10 @@ namespace NetVolveLib.Evolver
                 }
 
                 if (!(Statics.MainRandom.NextDouble() > selectedPlugin.Chance)) continue;
+                if (selectedPlugin.Name == "Crossover")
+                {
+                    crossover = true;
+                }
                 cWarrior = selectedPlugin.Execute(cWarrior, cBuddy, Parameters);
                 changes++;
             }

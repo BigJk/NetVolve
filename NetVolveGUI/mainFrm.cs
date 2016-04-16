@@ -26,11 +26,13 @@ namespace NetVolveGUI
 {
     public partial class mainFrm : Form
     {
+        private const int RankingCount = 43;
+
         public mainFrm()
         {
             InitializeComponent();
             DoubleBuffered = true;
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < RankingCount; i++)
             {
                 lstRank.Items.Add(
                     new ListViewItem(new string[] {"", (i + 1).ToString(), " - ", " - ", " - ", " - ", " - ", " - "})
@@ -41,7 +43,7 @@ namespace NetVolveGUI
         }
 
         private static Parameter Paras = ParameterLoader.FromFile("settings.cfg");
-        private static int Threads = 6;
+        private static int Threads = 5;
 
         public Grid grid;
         private GridWarrior[] Warriors;
@@ -54,13 +56,14 @@ namespace NetVolveGUI
 
             grid = File.Exists("save.bin") ? GridSerializer.Load("save.bin") : new Grid(Paras);
 
+
             Task.Factory.StartNew(new Action(() =>
             {
                 while (true)
                 {
                     try
                     {
-                        Thread.Sleep(500);
+                        Thread.Sleep(2000);
                         Invoke(new UpdateDel(UpdateList));
                     }
                     catch { }
@@ -76,8 +79,8 @@ namespace NetVolveGUI
             lblFps.Text = "FPS: " + grid.Fps;
 
             lstRank.BeginUpdate();
-            GridWarrior[] warriors = grid.GetWarriors(20);
-            for (int i = 0; i < 20; i++)
+            GridWarrior[] warriors = grid.GetWarriors(RankingCount);
+            for (int i = 0; i < RankingCount; i++)
             {
                 if (i < warriors.Count())
                 {
@@ -141,6 +144,8 @@ namespace NetVolveGUI
 
         private void mainFrm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            grid.StopAsync();
+            grid.CleanWarriors();
             GridSerializer.Save("save.bin", grid);
         }
 
